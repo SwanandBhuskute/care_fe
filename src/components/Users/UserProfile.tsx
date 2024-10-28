@@ -494,8 +494,6 @@ export default function UserProfile() {
           refetchUser();
           Notification.Success({ msg: "Profile picture updated." });
           setEditAvatar(false);
-        } else {
-          onError();
         }
       },
       null,
@@ -907,20 +905,24 @@ export default function UserProfile() {
                           {validateRule(
                             changePasswordForm.new_password_1?.length >= 8,
                             "Password should be atleast 8 characters long",
+                            !changePasswordForm.new_password_1,
                           )}
                           {validateRule(
                             changePasswordForm.new_password_1 !==
                               changePasswordForm.new_password_1.toUpperCase(),
                             "Password should contain at least 1 lowercase letter",
+                            !changePasswordForm.new_password_1,
                           )}
                           {validateRule(
                             changePasswordForm.new_password_1 !==
                               changePasswordForm.new_password_1.toLowerCase(),
                             "Password should contain at least 1 uppercase letter",
+                            !changePasswordForm.new_password_1,
                           )}
                           {validateRule(
                             /\d/.test(changePasswordForm.new_password_1),
                             "Password should contain at least 1 number",
+                            !changePasswordForm.new_password_1,
                           )}
                         </div>
                       </div>
@@ -944,6 +946,7 @@ export default function UserProfile() {
                               changePasswordForm.new_password_1 ===
                                 changePasswordForm.new_password_2,
                               "Confirm password should match the new password",
+                              !changePasswordForm.new_password_1,
                             )}
                           </div>
                         )}
