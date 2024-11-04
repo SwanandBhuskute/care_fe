@@ -248,15 +248,7 @@ const AssetsList = () => {
                       {asset.name}
                     </p>
                     {asset.name.length > 16 && (
-                      <span
-                        className="absolute z-10 hidden rounded bg-gray-700 px-2 py-1 text-xs text-white group-hover:block"
-                        style={{
-                          whiteSpace: "nowrap",
-                          bottom: "100%",
-                          left: "0",
-                          marginBottom: "5px",
-                        }}
-                      >
+                      <span className="absolute bottom-full z-10 hidden whitespace-nowrap rounded bg-gray-700 px-2 py-1 text-xs text-white group-hover:block">
                         {asset.name}
                       </span>
                     )}
