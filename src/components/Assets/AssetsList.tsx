@@ -240,15 +240,15 @@ const AssetsList = () => {
                       className="text-2xl"
                     />
                   </span>
-                  <div className="group relative w-48">
+                  <div className="tooltip group relative w-48">
                     <p
                       className="truncate"
                       data-testid="created-asset-list-name"
                     >
                       {asset.name}
                     </p>
-                    {asset.name.length > 16 && (
-                      <span className="absolute bottom-full z-10 hidden whitespace-nowrap rounded bg-gray-700 px-2 py-1 text-xs text-white group-hover:block">
+                    {asset.name.length > 20 && (
+                      <span className="tooltip-text tooltip-top absolute z-10 -translate-x-1/2 whitespace-nowrap rounded bg-gray-700 px-2 py-1 text-xs text-white group-hover:block">
                         {asset.name}
                       </span>
                     )}
