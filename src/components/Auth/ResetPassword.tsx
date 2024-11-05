@@ -158,10 +158,11 @@ export const ResetPassword = (props: any) => {
               />
               {confirmPasswordInputInFocus &&
                 form.confirm.length > 0 &&
+                form.password.length > 0 &&
                 validateRule(
                   form.confirm === form.password,
                   "Confirm password should match the entered password",
-                  !form.password,
+                  !form.password && form.password.length > 0,
                 )}
             </div>
             <div className="grid p-4 sm:flex sm:justify-between">

@@ -685,7 +685,7 @@ function ChooseAbhaAddress({
           false,
         )}
         {validateRule(
-          isNaN(Number(healthId[0])) && healthId[0] !== ".",
+          Number.isNaN(Number(healthId[0])) && healthId[0] !== ".",
           t("abha_address_validation_start_error"),
           false,
         )}
