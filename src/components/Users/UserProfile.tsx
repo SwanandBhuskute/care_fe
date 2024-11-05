@@ -951,8 +951,7 @@ export default function UserProfile() {
                               changePasswordForm.new_password_1 ===
                                 changePasswordForm.new_password_2,
                               "Confirm password should match the new password",
-                              !changePasswordForm.new_password_1 &&
-                                changePasswordForm.new_password_1.length > 0,
+                              !changePasswordForm.new_password_2,
                             )}
                           </div>
                         )}
