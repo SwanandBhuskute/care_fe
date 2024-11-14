@@ -8,11 +8,16 @@ export const camelCase = (str: string) => {
     .replace(/([A-Z])/g, (match) => match.toLowerCase());
 };
 
-// Capitalize the first letter of each word in a string
-export const startCase = (str: string) => {
+// Capitalize the first letter of each word in a string, handling edge cases
+export const startCase = (str: string): string => {
+  if (!str) return "";
+
   return str
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim()
     .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .map((word) => (word ? word[0].toUpperCase() + word.slice(1) : ""))
     .join(" ");
 };
 

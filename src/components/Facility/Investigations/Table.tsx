@@ -60,6 +60,17 @@ export const TestTable = ({ title, data, state, dispatch }: any) => {
   const handleValueChange = (value: any, name: string) => {
     const form = { ...state };
     const keys = name.split(".");
+
+    // Validate keys to prevent prototype pollution - coderabbit suggested
+    if (
+      keys.some((key) =>
+        ["__proto__", "constructor", "prototype"].includes(key),
+      )
+    ) {
+      console.error("Invalid object key detected");
+      return;
+    }
+
     let current = form;
     for (let i = 0; i < keys.length - 1; i++) {
       const key = keys[i];

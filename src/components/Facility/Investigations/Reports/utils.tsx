@@ -1,13 +1,24 @@
 import { InvestigationResponse } from "@/components/Facility/Investigations/Reports/types";
 
 const memoize = <T extends (...args: any[]) => any>(fn: T): T => {
-  const cache: Record<string, ReturnType<T>> = {};
+  const cache = new Map<string, ReturnType<T>>();
+  const MAX_CACHE_SIZE = 1000;
   return ((...args: Parameters<T>): ReturnType<T> => {
-    const key = JSON.stringify(args);
-    if (!cache[key]) {
-      cache[key] = fn(...args);
+    const key = args
+      .map((arg) =>
+        typeof arg === "object"
+          ? JSON.stringify(Object.entries(arg).sort())
+          : String(arg),
+      )
+      .join("|");
+    if (!cache.has(key)) {
+      if (cache.size >= MAX_CACHE_SIZE) {
+        const firstKey: any = cache.keys().next().value;
+        cache.delete(firstKey);
+      }
+      cache.set(key, fn(...args));
     }
-    return cache[key];
+    return cache.get(key)!;
   }) as T;
 };
 
@@ -41,15 +52,14 @@ export const transformData = memoize((data: InvestigationResponse) => {
     ),
   );
 
+  const sessionMap = new Map(
+    sessions.map((session, index) => [session.session_external_id, index]),
+  );
   const reqData = groupByInvestigation.map((value: any) => {
     const sessionValues = Array.from({ length: sessions.length });
     value.forEach((val: any) => {
-      const sessionIndex = sessions.findIndex(
-        (session) =>
-          session.session_external_id ===
-          val.session_object.session_external_id,
-      );
-
+      const sessionIndex =
+        sessionMap.get(val.session_object.session_external_id) ?? -1;
       if (sessionIndex > -1) {
         sessionValues[sessionIndex] = {
           min: val.investigation_object.min_value,
@@ -82,6 +92,7 @@ export const transformData = memoize((data: InvestigationResponse) => {
       sessionValues,
     };
   });
+
   return { sessions, data: reqData };
 });
 

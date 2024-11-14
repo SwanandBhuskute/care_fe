@@ -95,10 +95,28 @@ export default function ShowInvestigation(props: ShowInvestigationProps) {
     let current = changedFields;
     for (let i = 0; i < keys.length - 1; i++) {
       const key = keys[i];
-      if (!current[key]) current[key] = {};
+
+      // Protect against prototype pollution by skipping unsafe keys - crai
+      if (key === "__proto__" || key === "constructor" || key === "prototype") {
+        continue;
+      }
+
+      // Use Object.create(null) to prevent accidental inheritance from Object prototype - coderabbit
+      current[key] = current[key] || Object.create(null);
       current = current[key];
     }
-    current[keys[keys.length - 1]] = value;
+
+    const lastKey = keys[keys.length - 1];
+
+    // Final key assignment, ensuring no prototype pollution vulnerability - coderabbit
+    if (
+      lastKey !== "__proto__" &&
+      lastKey !== "constructor" &&
+      lastKey !== "prototype"
+    ) {
+      current[lastKey] = value;
+    }
+
     dispatch({ type: "set_changed_fields", changedFields });
   };
 

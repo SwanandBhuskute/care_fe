@@ -1,6 +1,6 @@
 import careConfig from "@careConfig";
 import { navigate } from "raviger";
-import { useCallback, useReducer, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import CareIcon from "@/CAREUI/icons/CareIcon";
@@ -183,6 +183,24 @@ export const parseOccupationFromExt = (occupation: Occupation) => {
     (item) => item.value === occupation,
   );
   return occupationObject?.id;
+};
+
+const useDebounce = (callback: (...args: any[]) => void, delay: number) => {
+  const callbackRef = useRef(callback);
+  useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
+
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const debouncedCallback = (...args: any[]) => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      callbackRef.current(...args);
+    }, delay);
+  };
+  return debouncedCallback;
 };
 
 export const PatientRegister = (props: PatientRegisterProps) => {
@@ -744,19 +762,6 @@ export const PatientRegister = (props: PatientRegisterProps) => {
       name: "medical_history",
       value: values,
     });
-  };
-
-  const useDebounce = (callback: (...args: any[]) => void, delay: number) => {
-    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const debouncedCallback = (...args: any[]) => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-      timeoutRef.current = setTimeout(() => {
-        callback(...args);
-      }, delay);
-    };
-    return debouncedCallback;
   };
 
   const duplicateCheck = useDebounce(async (phoneNo: string) => {
