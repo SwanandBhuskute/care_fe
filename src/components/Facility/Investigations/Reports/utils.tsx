@@ -7,7 +7,9 @@ const memoize = <T extends (...args: any[]) => any>(fn: T): T => {
     const key = args
       .map((arg) =>
         typeof arg === "object"
-          ? JSON.stringify(Object.entries(arg).sort())
+          ? arg instanceof Date
+            ? arg.getTime().toString()
+            : JSON.stringify(Object.entries(arg).sort())
           : String(arg),
       )
       .join("|");

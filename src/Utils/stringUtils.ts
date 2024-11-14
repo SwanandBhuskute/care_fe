@@ -1,11 +1,10 @@
 // Converts a string to camelCase format, first word - lowercase and each subsequent word - uppercase letter, with no spaces.
 export const camelCase = (str: string) => {
+  if (!str) return "";
   return str
-    .replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, (match, index) =>
-      index === 0 ? match.toLowerCase() : match.toUpperCase(),
-    )
-    .replace(/\s+/g, "")
-    .replace(/([A-Z])/g, (match) => match.toLowerCase());
+    .trim()
+    .replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ""))
+    .replace(/^[A-Z]/, (c) => c.toLowerCase());
 };
 
 // Capitalize the first letter of each word in a string, handling edge cases
@@ -23,5 +22,7 @@ export const startCase = (str: string): string => {
 
 // Capitalize the first letter of a string
 export const capitalize = (str: string) => {
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  if (!str) return "";
+  if (str.length === 1) return str.toUpperCase();
+  return str.charAt(0).toUpperCase() + str.slice(1);
 };
