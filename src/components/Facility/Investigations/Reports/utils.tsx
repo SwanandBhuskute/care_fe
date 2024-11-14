@@ -1,31 +1,55 @@
-import _ from "lodash";
-import { findIndex, memoize } from "lodash-es";
-
 import { InvestigationResponse } from "@/components/Facility/Investigations/Reports/types";
 
+const memoize = <T extends (...args: any[]) => any>(fn: T): T => {
+  const cache: Record<string, ReturnType<T>> = {};
+  return ((...args: Parameters<T>): ReturnType<T> => {
+    const key = JSON.stringify(args);
+    if (!cache[key]) {
+      cache[key] = fn(...args);
+    }
+    return cache[key];
+  }) as T;
+};
+
 export const transformData = memoize((data: InvestigationResponse) => {
-  const sessions = _.chain(data)
-    .map((value: any) => {
-      return {
-        ...value.session_object,
-        facility_name: value.consultation_object?.facility_name,
-        facility_id: value.consultation_object?.facility,
-      };
-    })
-    .uniqBy("session_external_id")
-    .orderBy("session_created_date", "desc")
-    .value();
-  const groupByInvestigation = _.chain(data)
-    .groupBy("investigation_object.external_id")
-    .values()
-    .value();
+  const sessions = Array.from(
+    new Map(
+      data.map((value: any) => [
+        value.session_object.session_external_id,
+        {
+          ...value.session_object,
+          facility_name: value.consultation_object?.facility_name,
+          facility_id: value.consultation_object?.facility,
+        },
+      ]),
+    ).values(),
+  ).sort(
+    (a, b) =>
+      new Date(b.session_created_date).getTime() -
+      new Date(a.session_created_date).getTime(),
+  );
+
+  const groupByInvestigation = Object.values(
+    data.reduce(
+      (acc, value: any) => {
+        const key = value.investigation_object.external_id;
+        if (!acc[key]) acc[key] = [];
+        acc[key].push(value);
+        return acc;
+      },
+      {} as { [key: string]: any[] },
+    ),
+  );
+
   const reqData = groupByInvestigation.map((value: any) => {
     const sessionValues = Array.from({ length: sessions.length });
     value.forEach((val: any) => {
-      const sessionIndex = findIndex(sessions, [
-        "session_external_id",
-        val.session_object.session_external_id,
-      ]);
+      const sessionIndex = sessions.findIndex(
+        (session) =>
+          session.session_external_id ===
+          val.session_object.session_external_id,
+      );
+
       if (sessionIndex > -1) {
         sessionValues[sessionIndex] = {
           min: val.investigation_object.min_value,

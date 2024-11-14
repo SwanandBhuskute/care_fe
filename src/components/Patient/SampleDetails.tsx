@@ -1,4 +1,3 @@
-import { camelCase, capitalize, startCase } from "lodash-es";
 import { navigate } from "raviger";
 import { useTranslation } from "react-i18next";
 
@@ -15,6 +14,7 @@ import { GENDER_TYPES, TEST_TYPE_CHOICES } from "@/common/constants";
 import { DetailRoute } from "@/Routers/types";
 import routes from "@/Utils/request/api";
 import useQuery from "@/Utils/request/useQuery";
+import { camelCase, capitalize, startCase } from "@/Utils/stringUtils";
 import { formatDateTime, formatPatientAge } from "@/Utils/utils";
 
 export const SampleDetails = ({ id }: DetailRoute) => {
@@ -270,11 +270,11 @@ export const SampleDetails = ({ id }: DetailRoute) => {
             <span className="font-semibold leading-relaxed">
               {t("status")}:{" "}
             </span>{" "}
-            {startCase(camelCase(flow.status))}
+            {startCase(camelCase(flow.status || ""))}
           </div>
           <div>
             <span className="font-semibold leading-relaxed">{t("label")}:</span>{" "}
-            {capitalize(flow.notes)}
+            {capitalize(flow.notes || "")}
           </div>
           <div>
             <span className="font-semibold leading-relaxed">

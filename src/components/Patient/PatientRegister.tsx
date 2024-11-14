@@ -1,6 +1,4 @@
 import careConfig from "@careConfig";
-import { startCase, toLower } from "lodash-es";
-import { debounce } from "lodash-es";
 import { navigate } from "raviger";
 import { useCallback, useReducer, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -76,6 +74,7 @@ import { usePubSub } from "@/Utils/pubsubContext";
 import routes from "@/Utils/request/api";
 import request from "@/Utils/request/request";
 import useQuery from "@/Utils/request/useQuery";
+import { startCase } from "@/Utils/stringUtils";
 import {
   compareBy,
   dateQueryString,
@@ -627,7 +626,7 @@ export const PatientRegister = (props: PatientRegisterProps) => {
             ? formData.last_vaccinated_date
             : null
           : null,
-      name: startCase(toLower(formData.name)),
+      name: startCase(formData.name.toLowerCase()),
       pincode: formData.pincode ? formData.pincode : undefined,
       gender: Number(formData.gender),
       nationality: formData.nationality,
@@ -747,7 +746,20 @@ export const PatientRegister = (props: PatientRegisterProps) => {
     });
   };
 
-  const duplicateCheck = debounce(async (phoneNo: string) => {
+  const useDebounce = (callback: (...args: any[]) => void, delay: number) => {
+    const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const debouncedCallback = (...args: any[]) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(() => {
+        callback(...args);
+      }, delay);
+    };
+    return debouncedCallback;
+  };
+
+  const duplicateCheck = useDebounce(async (phoneNo: string) => {
     if (
       phoneNo &&
       PhoneNumberValidator()(parsePhoneNumber(phoneNo) ?? "") === undefined

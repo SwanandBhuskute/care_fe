@@ -5,7 +5,6 @@ import {
   ComboboxOption,
   ComboboxOptions,
 } from "@headlessui/react";
-import { debounce } from "lodash-es";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -69,10 +68,14 @@ const AutoCompleteAsync = (props: Props) => {
   const hasSelection =
     (!multiple && selected) || (multiple && selected?.length > 0);
 
-  const fetchDataAsync = useMemo(
-    () =>
-      debounce(async (query: string) => {
-        setLoading(true);
+  const fetchDataAsync = useMemo(() => {
+    let timeoutId: ReturnType<typeof setTimeout>;
+
+    return async (query: string) => {
+      clearTimeout(timeoutId);
+      setLoading(true);
+
+      timeoutId = setTimeout(async () => {
         const data = ((await fetchData(query)) || [])?.filter((d: any) =>
           filter ? filter(d) : true,
         );
@@ -82,10 +85,11 @@ const AutoCompleteAsync = (props: Props) => {
         } else {
           setData(data);
         }
+
         setLoading(false);
-      }, debounceTime),
-    [fetchData, showNOptions, debounceTime],
-  );
+      }, debounceTime);
+    };
+  }, [fetchData, showNOptions, debounceTime]);
 
   useEffect(() => {
     fetchDataAsync(query);

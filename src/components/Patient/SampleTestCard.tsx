@@ -1,4 +1,3 @@
-import { camelCase, startCase } from "lodash-es";
 import { navigate } from "raviger";
 import { useState } from "react";
 
@@ -13,6 +12,7 @@ import { NonReadOnlyUsers } from "@/Utils/AuthorizeFor";
 import * as Notification from "@/Utils/Notifications";
 import routes from "@/Utils/request/api";
 import request from "@/Utils/request/request";
+import { camelCase, startCase } from "@/Utils/stringUtils";
 import { formatDateTime } from "@/Utils/utils";
 
 interface SampleDetailsProps {
@@ -101,7 +101,7 @@ export const SampleTestCard = (props: SampleDetailsProps) => {
               Status{" "}
             </div>
             <div className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium leading-5">
-              {startCase(camelCase(itemData.status))}
+              {startCase(camelCase(itemData.status || ""))}
             </div>
           </div>
         </div>
@@ -133,7 +133,7 @@ export const SampleTestCard = (props: SampleDetailsProps) => {
               Result{" "}
             </div>
             <div className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium leading-5">
-              {startCase(camelCase(itemData.result))}
+              {startCase(camelCase(itemData.result || ""))}
             </div>
           </div>
         </div>

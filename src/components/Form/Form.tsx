@@ -1,4 +1,3 @@
-import { isEmpty, omitBy } from "lodash-es";
 import { useEffect, useMemo, useState } from "react";
 
 import { Cancel, Submit } from "@/components/Common/ButtonV2";
@@ -58,7 +57,13 @@ const Form = <T extends FormDetails>({
     event.stopPropagation();
 
     if (validate) {
-      const errors = omitBy(validate(state.form), isEmpty) as FormErrors<T>;
+      const errors = Object.fromEntries(
+        Object.entries(validate(state.form)).filter(
+          ([_key, value]) =>
+            value !== "" && value !== null && value !== undefined,
+        ),
+      ) as FormErrors<T>;
+
       if (Object.keys(errors).length) {
         dispatch({ type: "set_errors", errors });
 

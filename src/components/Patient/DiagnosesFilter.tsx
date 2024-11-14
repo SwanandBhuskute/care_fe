@@ -1,5 +1,4 @@
-import { debounce } from "lodash-es";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ICD11DiagnosisModel } from "@/components/Diagnosis/types";
@@ -34,6 +33,25 @@ interface Props {
   value?: string;
   onChange: (event: { name: DiagnosesFilterKey; value: string }) => void;
 }
+
+function useDebounce(callback: (...args: any[]) => void, delay: number) {
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const debouncedCallback = useCallback(
+    (...args: any[]) => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(() => {
+        callback(...args);
+      }, delay);
+    },
+    [callback, delay],
+  );
+
+  return debouncedCallback;
+}
+
 export default function DiagnosesFilter(props: Props) {
   const { t } = useTranslation();
   const [diagnoses, setDiagnoses] = useState<ICD11DiagnosisModel[]>([]);
@@ -68,6 +86,10 @@ export default function DiagnosesFilter(props: Props) {
     });
   }, [props.value]);
 
+  const debouncedQuery = useDebounce((query: string) => {
+    refetch({ query: { query } });
+  }, 300);
+
   return (
     <AutocompleteMultiSelectFormField
       id={props.name}
@@ -88,7 +110,7 @@ export default function DiagnosesFilter(props: Props) {
       options={mergeQueryOptions(diagnoses, data ?? [], (obj) => obj.id)}
       optionLabel={(option) => option.label}
       optionValue={(option) => option}
-      onQuery={debounce((query: string) => refetch({ query: { query } }), 300)}
+      onQuery={debouncedQuery}
       isLoading={loading}
     />
   );
