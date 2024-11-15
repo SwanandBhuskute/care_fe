@@ -70,7 +70,7 @@ export default function DiagnosesFilter(props: Props) {
 
   const debouncedQuery = useDebounce((query: string) => {
     refetch({ query: { query } });
-  }, 300);
+  }, 100);
 
   return (
     <AutocompleteMultiSelectFormField

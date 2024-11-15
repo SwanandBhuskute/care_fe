@@ -772,7 +772,7 @@ export const PatientRegister = (props: PatientRegisterProps) => {
         }
       }
     }
-  }, 300);
+  }, 100);
 
   const handleDialogClose = (action: string) => {
     if (action === "transfer") {
