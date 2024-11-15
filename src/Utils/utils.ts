@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 import { PatientModel } from "@/components/Patient/models";
 
 import { AREACODES, IN_LANDLINE_AREA_CODES } from "@/common/constants";
@@ -543,4 +545,47 @@ export const fahrenheitToCelsius = (fahrenheit: number) => {
  */
 export const keysOf = <T extends object>(obj: T) => {
   return Object.keys(obj) as (keyof T)[];
+};
+
+// Capitalize the first letter of each word in a string, handling edge cases
+export const startCase = (str: string): string => {
+  if (!str) return "";
+
+  return str
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim()
+    .split(" ")
+    .map((word) => (word ? word[0].toUpperCase() + word.slice(1) : ""))
+    .join(" ");
+};
+
+// Converts a string to camelCase format, first word - lowercase and each subsequent word - uppercase letter, with no spaces.
+export const camelCase = (str: string) => {
+  if (!str) return "";
+  return str
+    .trim()
+    .replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ""))
+    .replace(/^[A-Z]/, (c) => c.toLowerCase());
+};
+
+export const useDebounce = (
+  callback: (...args: string[]) => void,
+  delay: number,
+) => {
+  const callbackRef = useRef(callback);
+  useEffect(() => {
+    callbackRef.current = callback;
+  }, [callback]);
+
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const debouncedCallback = (...args: string[]) => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      callbackRef.current(...args);
+    }, delay);
+  };
+  return debouncedCallback;
 };

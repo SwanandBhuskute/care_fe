@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { ICD11DiagnosisModel } from "@/components/Diagnosis/types";
@@ -8,7 +8,7 @@ import AutocompleteMultiSelectFormField from "@/components/Form/FormFields/Autoc
 import { Error } from "@/Utils/Notifications";
 import routes from "@/Utils/request/api";
 import useQuery from "@/Utils/request/useQuery";
-import { mergeQueryOptions } from "@/Utils/utils";
+import { mergeQueryOptions, useDebounce } from "@/Utils/utils";
 
 export const FILTER_BY_DIAGNOSES_KEYS = [
   "diagnoses",
@@ -32,24 +32,6 @@ interface Props {
   name: DiagnosesFilterKey;
   value?: string;
   onChange: (event: { name: DiagnosesFilterKey; value: string }) => void;
-}
-
-function useDebounce(callback: (...args: any[]) => void, delay: number) {
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const debouncedCallback = useCallback(
-    (...args: any[]) => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-      timeoutRef.current = setTimeout(() => {
-        callback(...args);
-      }, delay);
-    },
-    [callback, delay],
-  );
-
-  return debouncedCallback;
 }
 
 export default function DiagnosesFilter(props: Props) {

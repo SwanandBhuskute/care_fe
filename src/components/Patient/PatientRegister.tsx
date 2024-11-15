@@ -1,6 +1,6 @@
 import careConfig from "@careConfig";
 import { navigate } from "raviger";
-import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { useCallback, useReducer, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import CareIcon from "@/CAREUI/icons/CareIcon";
@@ -74,7 +74,7 @@ import { usePubSub } from "@/Utils/pubsubContext";
 import routes from "@/Utils/request/api";
 import request from "@/Utils/request/request";
 import useQuery from "@/Utils/request/useQuery";
-import { startCase } from "@/Utils/stringUtils";
+import { startCase } from "@/Utils/utils";
 import {
   compareBy,
   dateQueryString,
@@ -82,6 +82,7 @@ import {
   includesIgnoreCase,
   parsePhoneNumber,
   scrollTo,
+  useDebounce,
 } from "@/Utils/utils";
 
 export type PatientForm = PatientModel &
@@ -183,24 +184,6 @@ export const parseOccupationFromExt = (occupation: Occupation) => {
     (item) => item.value === occupation,
   );
   return occupationObject?.id;
-};
-
-const useDebounce = (callback: (...args: any[]) => void, delay: number) => {
-  const callbackRef = useRef(callback);
-  useEffect(() => {
-    callbackRef.current = callback;
-  }, [callback]);
-
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const debouncedCallback = (...args: any[]) => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    timeoutRef.current = setTimeout(() => {
-      callbackRef.current(...args);
-    }, delay);
-  };
-  return debouncedCallback;
 };
 
 export const PatientRegister = (props: PatientRegisterProps) => {
