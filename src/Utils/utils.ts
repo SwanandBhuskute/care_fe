@@ -1,5 +1,3 @@
-import { useEffect, useRef } from "react";
-
 import { PatientModel } from "@/components/Patient/models";
 
 import { AREACODES, IN_LANDLINE_AREA_CODES } from "@/common/constants";
@@ -569,23 +567,35 @@ export const camelCase = (str: string) => {
     .replace(/^[A-Z]/, (c) => c.toLowerCase());
 };
 
-export const useDebounce = (
-  callback: (...args: string[]) => void,
-  delay: number,
-) => {
-  const callbackRef = useRef(callback);
-  useEffect(() => {
-    callbackRef.current = callback;
-  }, [callback]);
+export function setNestedValueSafely(
+  obj: Record<string, any>,
+  path: string,
+  value: any,
+) {
+  const keys = path.split(".");
+  let current = obj;
 
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const debouncedCallback = (...args: string[]) => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
+  for (let i = 0; i < keys.length - 1; i++) {
+    const key = keys[i];
+
+    // Protect against prototype pollution by skipping unsafe keys
+    if (key === "__proto__" || key === "constructor" || key === "prototype") {
+      continue;
     }
-    timeoutRef.current = setTimeout(() => {
-      callbackRef.current(...args);
-    }, delay);
-  };
-  return debouncedCallback;
-};
+
+    // Use Object.create(null) to prevent accidental inheritance from Object prototype
+    current[key] = current[key] || Object.create(null);
+    current = current[key];
+  }
+
+  const lastKey = keys[keys.length - 1];
+
+  // Final key assignment, ensuring no prototype pollution vulnerability
+  if (
+    lastKey !== "__proto__" &&
+    lastKey !== "constructor" &&
+    lastKey !== "prototype"
+  ) {
+    current[lastKey] = value;
+  }
+}

@@ -5,10 +5,12 @@ import { ICD11DiagnosisModel } from "@/components/Diagnosis/types";
 import { getDiagnosesByIds } from "@/components/Diagnosis/utils";
 import AutocompleteMultiSelectFormField from "@/components/Form/FormFields/AutocompleteMultiselect";
 
+import useDebounce from "@/hooks/useDebounce";
+
 import { Error } from "@/Utils/Notifications";
 import routes from "@/Utils/request/api";
 import useQuery from "@/Utils/request/useQuery";
-import { mergeQueryOptions, useDebounce } from "@/Utils/utils";
+import { mergeQueryOptions } from "@/Utils/utils";
 
 export const FILTER_BY_DIAGNOSES_KEYS = [
   "diagnoses",
@@ -70,7 +72,7 @@ export default function DiagnosesFilter(props: Props) {
 
   const debouncedQuery = useDebounce((query: string) => {
     refetch({ query: { query } });
-  }, 0);
+  }, 300);
 
   return (
     <AutocompleteMultiSelectFormField

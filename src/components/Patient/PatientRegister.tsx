@@ -54,6 +54,7 @@ import { UserModel } from "@/components/Users/models";
 
 import useAppHistory from "@/hooks/useAppHistory";
 import useAuthUser from "@/hooks/useAuthUser";
+import useDebounce from "@/hooks/useDebounce";
 
 import {
   BLOOD_GROUPS,
@@ -84,7 +85,6 @@ import {
   includesIgnoreCase,
   parsePhoneNumber,
   scrollTo,
-  useDebounce,
 } from "@/Utils/utils";
 
 export type PatientForm = PatientModel &
@@ -778,7 +778,7 @@ export const PatientRegister = (props: PatientRegisterProps) => {
         }
       }
     }
-  }, 0);
+  }, 300);
 
   const handleDialogClose = (action: string) => {
     if (action === "transfer") {
