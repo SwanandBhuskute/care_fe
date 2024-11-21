@@ -78,6 +78,7 @@ export const SampleTestCard = (props: SampleDetailsProps) => {
 
   return (
     <div
+      id="sample-test-history"
       className={`${
         itemData.result === "POSITIVE"
           ? "border-red-500 bg-red-100 hover:border-red-700"
@@ -111,7 +112,10 @@ export const SampleTestCard = (props: SampleDetailsProps) => {
             <div className="text-sm font-semibold leading-5 text-zinc-400">
               Sample Type{" "}
             </div>
-            <div className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium capitalize leading-5">
+            <div
+              id="sample-test-type"
+              className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium capitalize leading-5"
+            >
               {itemData.sample_type?.toLowerCase()}
             </div>
           </div>
@@ -122,7 +126,10 @@ export const SampleTestCard = (props: SampleDetailsProps) => {
               <div className="text-sm font-semibold leading-5 text-zinc-400">
                 Fast-Track{" "}
               </div>
-              <div className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium leading-5">
+              <div
+                id="sample-test-fast-track"
+                className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium leading-5"
+              >
                 {itemData.fast_track}
               </div>
             </div>
