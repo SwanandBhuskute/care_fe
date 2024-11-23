@@ -553,9 +553,11 @@ export const startCase = (str: string): string => {
     .toLowerCase()
     .replace(/\s+/g, " ")
     .trim()
-    .split(" ")
-    .map((word) => (word ? word[0].toUpperCase() + word.slice(1) : ""))
-    .join(" ");
+    .split(/[\s.'-]+/)
+    .map((word) => {
+      return word ? word[0].toUpperCase() + word.slice(1) : "";
+    })
+    .join(" ");
 };
 
 // Converts a string to camelCase format, first word - lowercase and each subsequent word - uppercase letter, with no spaces.
