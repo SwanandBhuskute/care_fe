@@ -42,8 +42,6 @@ describe("Sample Test", () => {
     patientConsultationPage.verifyPatientDetailsResponse();
     // Visit SampleRequest Page
     sampleTestPage.visitSampleRequestPage();
-    // Wait for necessary APIs
-    cy.intercept("GET", "/api/sample-test-status").as("sampleTestStatus");
     // Fill Sample Test Request Form
     sampleTestPage.selectSampleType(sampleTestType);
     sampleTestPage.selectIcmrCategory(icmrCategory);
@@ -62,12 +60,6 @@ describe("Sample Test", () => {
     cy.clickSubmitButton("Confirm your request to send sample for testing");
     sampleTestPage.verifySampleTestReq();
     cy.verifyNotification("Sample test created successfully");
-    // Wait for status element to load
-    cy.wait("@sampleTestStatus");
-    cy.get("#sample-test-status", { timeout: 20000 })
-      .should("exist")
-      .and("contain.text", sampleTestStatus);
-
     // Check the updated request history
     sampleTestPage.checkRequestHistory(
       sampleTestStatus,

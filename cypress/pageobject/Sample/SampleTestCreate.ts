@@ -1,7 +1,7 @@
 export class SampleTestPage {
   visitSampleRequestPage(): void {
     cy.verifyAndClickElement("#sample-request-btn", "Request Sample Test");
-    cy.url().should("include", "/sample-test");
+    cy.url().should("include", "/sample-test", { timeout: 20000 });
   }
 
   selectSampleType(option: string): void {

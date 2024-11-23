@@ -83,7 +83,6 @@ describe("Patient Creation with consultation", () => {
     patientPage.createPatient();
     patientPage.selectFacility(patientFacility);
     patientPage.patientformvisibility();
-    cy.get("div:contains('Age')").scrollIntoView().should("be.visible").click();
     // Patient Details page
     patientPage.typePatientPhoneNumber(phone_number);
     patientPage.checkPhoneNumberIsEmergencyNumber();

@@ -201,8 +201,10 @@ describe("Patient Consultation in multiple combination", () => {
     cy.clickSubmitButton("Create Consultation");
     cy.verifyNotification("Consultation created successfully");
     // verify the data and death report
-    cy.get("#consultation-buttons").should("be.visible");
-    cy.contains("#consultation-buttons", "EXPIRED").should("exist");
+    patientConsultationPage.verifyTextInConsultation(
+      "#consultation-buttons",
+      "EXPIRED",
+    );
     patientConsultationPage.clickPatientDetails();
     patientDeathReport.clickDeathReport();
     patientDeathReport.verifyDeathReportAutofill(

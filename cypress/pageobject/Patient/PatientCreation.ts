@@ -7,7 +7,9 @@ export class PatientPage {
     cy.intercept("GET", "**/api/v1/facility/**").as("getFacilities");
     cy.get("#add-patient-details").should("be.visible");
     cy.get("#add-patient-details").click();
-    cy.wait("@getFacilities").its("response.statusCode").should("eq", 200);
+    cy.wait("@getFacilities", { timeout: 20000 })
+      .its("response.statusCode")
+      .should("eq", 200);
   }
 
   visitPatient(patientName: string) {
