@@ -70,10 +70,6 @@ export default function DiagnosesFilter(props: Props) {
     });
   }, [props.value]);
 
-  const debouncedQuery = useDebounce((query: string) => {
-    refetch({ query: { query } });
-  }, 300);
-
   return (
     <AutocompleteMultiSelectFormField
       id={props.name}
@@ -94,7 +90,10 @@ export default function DiagnosesFilter(props: Props) {
       options={mergeQueryOptions(diagnoses, data ?? [], (obj) => obj.id)}
       optionLabel={(option) => option.label}
       optionValue={(option) => option}
-      onQuery={debouncedQuery}
+      onQuery={useDebounce(
+        (query: string) => refetch({ query: { query } }),
+        300,
+      )}
       isLoading={loading}
     />
   );

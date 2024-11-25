@@ -777,6 +777,11 @@ export const PatientRegister = (props: PatientRegisterProps) => {
           });
         }
       }
+    } else {
+      setStatusDialog({
+        show: false,
+        patientList: [],
+      });
     }
   }, 300);
 
