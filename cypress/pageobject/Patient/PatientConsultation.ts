@@ -96,7 +96,7 @@ export class PatientConsultationPage {
 
   verifyTextInConsultation(selector: string, text: string) {
     cy.get(selector).scrollIntoView();
-    cy.get(selector).contains(text, { timeout: 20000 }).should("be.visible");
+    cy.get(selector).contains(text).should("be.visible");
   }
 
   typeReferringFacility(referringFacility: string) {
