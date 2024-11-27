@@ -656,7 +656,7 @@ export const PatientRegister = (props: PatientRegisterProps) => {
             ? formData.last_vaccinated_date
             : null
           : null,
-      name: startCase(formData.name.toLowerCase()),
+      name: formData.name ? startCase(formData.name.toLowerCase()) : "",
       pincode: formData.pincode ? formData.pincode : undefined,
       gender: Number(formData.gender),
       nationality: formData.nationality,
