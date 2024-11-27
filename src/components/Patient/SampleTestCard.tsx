@@ -12,7 +12,7 @@ import { NonReadOnlyUsers } from "@/Utils/AuthorizeFor";
 import * as Notification from "@/Utils/Notifications";
 import routes from "@/Utils/request/api";
 import request from "@/Utils/request/request";
-import { camelCase, formatDateTime } from "@/Utils/utils";
+import { camelCase, formatDateTime, startCase } from "@/Utils/utils";
 
 interface SampleDetailsProps {
   facilityId: string;
@@ -100,10 +100,11 @@ export const SampleTestCard = (props: SampleDetailsProps) => {
             <div className="text-sm font-semibold leading-5 text-zinc-400">
               Status{" "}
             </div>
-            <div className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium leading-5">
-              <span className="capitalize">
-                {camelCase(itemData.status || "")}
-              </span>
+            <div
+              id="sample-test-status"
+              className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium leading-5"
+            >
+              {startCase(camelCase(itemData.status || ""))}
             </div>
           </div>
         </div>
@@ -140,10 +141,11 @@ export const SampleTestCard = (props: SampleDetailsProps) => {
             <div className="text-sm font-semibold leading-5 text-zinc-400">
               Result{" "}
             </div>
-            <div className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium leading-5">
-              <span className="capitalize">
-                {camelCase(itemData.result || "")}
-              </span>
+            <div
+              id="sample-test-result"
+              className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium leading-5"
+            >
+              {startCase(camelCase(itemData.result || ""))}
             </div>
           </div>
         </div>

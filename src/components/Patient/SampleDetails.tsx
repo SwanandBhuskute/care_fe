@@ -14,7 +14,7 @@ import { GENDER_TYPES, TEST_TYPE_CHOICES } from "@/common/constants";
 import { DetailRoute } from "@/Routers/types";
 import routes from "@/Utils/request/api";
 import useQuery from "@/Utils/request/useQuery";
-import { camelCase } from "@/Utils/utils";
+import { camelCase, startCase } from "@/Utils/utils";
 import { formatDateTime, formatPatientAge } from "@/Utils/utils";
 
 export const SampleDetails = ({ id }: DetailRoute) => {
@@ -270,11 +270,11 @@ export const SampleDetails = ({ id }: DetailRoute) => {
             <span className="font-semibold leading-relaxed">
               {t("status")}:{" "}
             </span>{" "}
-            <span className="capitalize">{camelCase(flow.status || "")}</span>
+            <span>{startCase(camelCase(String(flow.status || "")))}</span>
           </div>
           <div>
             <span className="font-semibold leading-relaxed">{t("label")}:</span>{" "}
-            <span className="capitalize">{flow.notes}</span>
+            <span>{startCase(String(flow.notes || ""))}</span>
           </div>
           <div>
             <span className="font-semibold leading-relaxed">
@@ -370,8 +370,8 @@ export const SampleDetails = ({ id }: DetailRoute) => {
               <span className="font-semibold leading-relaxed">
                 {t("doctors_name")}:{" "}
               </span>
-              <span className="capitalize">
-                {camelCase(sampleDetails.doctor_name)}
+              <span id="doctor_name">
+                {startCase(camelCase(sampleDetails.doctor_name))}
               </span>
             </div>
           )}
@@ -455,9 +455,7 @@ export const SampleDetails = ({ id }: DetailRoute) => {
               <span className="font-semibold capitalize leading-relaxed">
                 {t("sample_type")}:{" "}
               </span>
-              <span className="capitalize">
-                {camelCase(sampleDetails.sample_type)}
-              </span>
+              {startCase(camelCase(sampleDetails.sample_type))}
             </div>
           )}
           {sampleDetails?.sample_type === "OTHER TYPE" && (
