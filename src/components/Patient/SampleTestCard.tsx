@@ -104,7 +104,7 @@ export const SampleTestCard = (props: SampleDetailsProps) => {
               id="sample-test-status"
               className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium leading-5"
             >
-              {startCase(camelCase(itemData.status || ""))}
+              {startCase(camelCase(String(itemData.status)))}
             </div>
           </div>
         </div>
@@ -145,7 +145,7 @@ export const SampleTestCard = (props: SampleDetailsProps) => {
               id="sample-test-result"
               className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium leading-5"
             >
-              {startCase(camelCase(itemData.result || ""))}
+              {startCase(camelCase(String(itemData.result)))}
             </div>
           </div>
         </div>
