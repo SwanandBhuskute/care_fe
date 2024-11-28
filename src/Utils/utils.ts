@@ -549,7 +549,7 @@ export const keysOf = <T extends object>(obj: T) => {
 export const startCase = (str: string): string => {
   if (!str || str.length === 0) return "";
   return str
-    .replace(/([A-Z])/g, " $1")
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
     .replace(/[_-]+/g, " ")
     .replace(/\s+/g, " ")
     .trim()
@@ -563,8 +563,8 @@ export const camelCase = (str: string): string => {
   if (!str || str.length === 0) return "";
   return str
     .trim()
-    .replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ""))
-    .replace(/^[A-Z]/, (c) => c.toLowerCase());
+    .toLowerCase()
+    .replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ""));
 };
 
 export function setNestedValueSafely(
