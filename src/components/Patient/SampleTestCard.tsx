@@ -102,9 +102,9 @@ export const SampleTestCard = (props: SampleDetailsProps) => {
             </div>
             <div
               id="sample-test-status"
-              className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium leading-5"
+              className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium capitalize leading-5"
             >
-              {startCase(camelCase(String(itemData.status)))}
+              {itemData.status}
             </div>
           </div>
         </div>

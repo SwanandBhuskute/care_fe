@@ -101,7 +101,7 @@ const TextFormField = forwardRef((props: TextFormFieldProps, ref) => {
         name={field.name}
         value={field.value}
         required={field.required}
-        autoCapitalize={props.autoCapitalize || "words"}
+        autoCapitalize={props.autoCapitalize}
         onChange={(e) => field.handleChange(e.target.value)}
       />
       {props.clearable && field.value && (

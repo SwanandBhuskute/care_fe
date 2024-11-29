@@ -270,11 +270,11 @@ export const SampleDetails = ({ id }: DetailRoute) => {
             <span className="font-semibold leading-relaxed">
               {t("status")}:{" "}
             </span>{" "}
-            <span>{startCase(camelCase(String(flow.status || "")))}</span>
+            <span className="capitalize">{flow.status}</span>
           </div>
           <div>
             <span className="font-semibold leading-relaxed">{t("label")}:</span>{" "}
-            <span>{startCase(String(flow.notes || ""))}</span>
+            <span className="capitalize">{flow.notes}</span>
           </div>
           <div>
             <span className="font-semibold leading-relaxed">
