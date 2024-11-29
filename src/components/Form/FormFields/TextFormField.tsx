@@ -90,7 +90,7 @@ const TextFormField = forwardRef((props: TextFormFieldProps, ref) => {
         ref={ref as React.Ref<HTMLInputElement>}
         id={field.id}
         className={classNames(
-          "cui-input-base peer",
+          "cui-input-base peer pr-9",
           hasLeading && (props.leadingPadding || "pl-10"),
           hasTrailing && (props.trailingPadding || "pr-10"),
           field.error && "border-danger-500",
