@@ -59,8 +59,7 @@ const Form = <T extends FormDetails>({
     if (validate) {
       const errors = Object.fromEntries(
         Object.entries(validate(state.form)).filter(
-          ([_key, value]) =>
-            value !== "" && value !== null && value !== undefined,
+          ([_key, value]) => value !== "" && value !== undefined,
         ),
       ) as FormErrors<T>;
 
