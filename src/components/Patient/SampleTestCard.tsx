@@ -12,7 +12,7 @@ import { NonReadOnlyUsers } from "@/Utils/AuthorizeFor";
 import * as Notification from "@/Utils/Notifications";
 import routes from "@/Utils/request/api";
 import request from "@/Utils/request/request";
-import { camelCase, formatDateTime, startCase } from "@/Utils/utils";
+import { formatDateTime } from "@/Utils/utils";
 
 interface SampleDetailsProps {
   facilityId: string;
@@ -143,9 +143,9 @@ export const SampleTestCard = (props: SampleDetailsProps) => {
             </div>
             <div
               id="sample-test-result"
-              className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium leading-5"
+              className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium capitalize leading-5"
             >
-              {startCase(camelCase(String(itemData.result)))}
+              {itemData.result}
             </div>
           </div>
         </div>
