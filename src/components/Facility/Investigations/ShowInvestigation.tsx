@@ -9,7 +9,8 @@ import * as Notification from "@/Utils/Notifications";
 import routes from "@/Utils/request/api";
 import request from "@/Utils/request/request";
 import useQuery from "@/Utils/request/useQuery";
-import { setNestedValueSafely } from "@/Utils/utils";
+
+// import { setNestedValueSafely } from "@/Utils/utils";
 
 const initialState = {
   changedFields: {},
@@ -91,10 +92,25 @@ export default function ShowInvestigation(props: ShowInvestigationProps) {
   });
 
   const handleValueChange = (value: any, name: string) => {
+    const keys = name.split(".");
+    // Validate keys to prevent prototype pollution - coderabbit suggested
+    if (
+      keys.some((key) =>
+        ["__proto__", "constructor", "prototype"].includes(key),
+      )
+    ) {
+      return;
+    }
+
     const changedFields = { ...state.changedFields };
+    let current = changedFields;
+    for (let i = 0; i < keys.length - 1; i++) {
+      const key = keys[i];
+      if (!current[key]) current[key] = {};
+      current = current[key];
+    }
 
-    setNestedValueSafely(changedFields, name, value);
-
+    current[keys[keys.length - 1]] = value;
     dispatch({ type: "set_changed_fields", changedFields });
   };
 

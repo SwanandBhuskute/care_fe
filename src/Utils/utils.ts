@@ -566,36 +566,3 @@ export const camelCase = (str: string): string => {
     .toLowerCase()
     .replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ""));
 };
-
-export function setNestedValueSafely(
-  obj: Record<string, any>,
-  path: string,
-  value: any,
-) {
-  const keys = path.split(".");
-  let current = obj;
-
-  for (let i = 0; i < keys.length - 1; i++) {
-    const key = keys[i];
-
-    // Protect against prototype pollution by skipping unsafe keys
-    if (key === "__proto__" || key === "constructor" || key === "prototype") {
-      continue;
-    }
-
-    // Use Object.create(null) to prevent accidental inheritance from Object prototype
-    current[key] = current[key] || Object.create(null);
-    current = current[key];
-  }
-
-  const lastKey = keys[keys.length - 1];
-
-  // Final key assignment, ensuring no prototype pollution vulnerability
-  if (
-    lastKey !== "__proto__" &&
-    lastKey !== "constructor" &&
-    lastKey !== "prototype"
-  ) {
-    current[lastKey] = value;
-  }
-}

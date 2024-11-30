@@ -44,6 +44,11 @@ export default function DiagnosesFilter(props: Props) {
     prefetch: false,
   });
 
+  const handleQuery = useDebounce(
+    (query: string) => refetch({ query: { query } }),
+    300,
+  );
+
   useEffect(() => {
     if (res?.status === 500) {
       Error({ msg: "ICD-11 Diagnosis functionality is facing issues." });
@@ -90,10 +95,7 @@ export default function DiagnosesFilter(props: Props) {
       options={mergeQueryOptions(diagnoses, data ?? [], (obj) => obj.id)}
       optionLabel={(option) => option.label}
       optionValue={(option) => option}
-      onQuery={useDebounce(
-        (query: string) => refetch({ query: { query } }),
-        300,
-      )}
+      onQuery={handleQuery}
       isLoading={loading}
     />
   );
