@@ -545,7 +545,7 @@ export const keysOf = <T extends object>(obj: T) => {
   return Object.keys(obj) as (keyof T)[];
 };
 
-// Capitalize the first letter of each word in a string, handling edge cases
+// Capitalizes the first letter of each word in a string, handling edge cases
 export const startCase = (str: string): string => {
   if (!str || str.length === 0) return "";
   return str
@@ -558,7 +558,7 @@ export const startCase = (str: string): string => {
     .join(" ");
 };
 
-// Converts a string to camelCase format, first word - lowercase and each subsequent word - uppercase letter, with no spaces.
+// Converts a string to camelCase format, first word to lowercase and each subsequent word - uppercase letter, with no spaces.
 export const camelCase = (str: string): string => {
   if (!str || str.length === 0) return "";
   return str
