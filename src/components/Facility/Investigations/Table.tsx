@@ -67,7 +67,6 @@ export const TestTable = ({ title, data, state, dispatch }: any) => {
         ["__proto__", "constructor", "prototype"].includes(key),
       )
     ) {
-      console.error("Invalid object key detected");
       return;
     }
 

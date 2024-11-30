@@ -270,7 +270,7 @@ export const SampleDetails = ({ id }: DetailRoute) => {
             <span className="font-semibold leading-relaxed">
               {t("status")}:{" "}
             </span>{" "}
-            <span className="capitalize">{flow.status}</span>
+            <span>{t(`SAMPLE_TEST_HISTORY__${flow.status}`) || "Unknown"}</span>
           </div>
           <div>
             <span className="font-semibold leading-relaxed">{t("label")}:</span>{" "}
