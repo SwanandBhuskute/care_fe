@@ -147,7 +147,7 @@ export const SampleTestCard = (props: SampleDetailsProps) => {
               id="sample-test-result"
               className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium capitalize leading-5"
             >
-              {itemData.result}
+              {t(`SAMPLE_TEST_RESULT__${itemData.result}`) || "Unknown"}
             </div>
           </div>
         </div>
