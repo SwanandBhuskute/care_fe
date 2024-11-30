@@ -1,5 +1,6 @@
 import { navigate } from "raviger";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import ButtonV2 from "@/components/Common/ButtonV2";
 import RelativeDateUserMention from "@/components/Common/RelativeDateUserMention";
@@ -23,6 +24,7 @@ interface SampleDetailsProps {
 }
 
 export const SampleTestCard = (props: SampleDetailsProps) => {
+  const { t } = useTranslation();
   const { itemData, handleApproval, facilityId, patientId, refetch } = props;
 
   const [statusDialog, setStatusDialog] = useState<{
@@ -104,7 +106,7 @@ export const SampleTestCard = (props: SampleDetailsProps) => {
               id="sample-test-status"
               className="mt-1 overflow-x-scroll whitespace-normal break-words text-sm font-medium capitalize leading-5"
             >
-              {itemData.status}
+              {t(`SAMPLE_TEST_HISTORY__${itemData.status}`) || "Unknown"}
             </div>
           </div>
         </div>

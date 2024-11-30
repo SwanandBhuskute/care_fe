@@ -1,8 +1,4 @@
 {
-  "SAMPLE_TEST_HISTORY__APPROVED": "मंजूर",
-  "SAMPLE_TEST_HISTORY__COMPLETED": "पूर्ण झाले",
-  "SAMPLE_TEST_HISTORY__RECEIVED_AT_LAB": "प्रयोगशाळेत प्राप्त झाले",
-  "SAMPLE_TEST_HISTORY__REQUEST_SUBMITTED": "विनंती सादर केली",
   "Assets": "मालमत्ता",
   "Dashboard": "डॅशबोर्ड",
   "District": "जिल्हा",
@@ -19,7 +15,6 @@
   "Sample Test": "नमुना तपासणी ",
   "Shifting": "शिफ्टिंग",
   "State": "राज्य",
-  "status": "स्थिती",
   "Users": "युजर्स",
   "View Facility": "हॉस्पिटल पाहा",
   "Ward": "वॉर्ड",
