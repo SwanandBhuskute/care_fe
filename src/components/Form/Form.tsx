@@ -61,12 +61,6 @@ const Form = <T extends FormDetails>({
     event.stopPropagation();
 
     if (validate) {
-      // const errors = Object.fromEntries(
-      //   Object.entries(validate(state.form)).filter(
-      //     ([_key, value]) => value !== "" && value !== undefined,
-      //   ),
-      // ) as FormErrors<T>;
-
       const errors = omitEmptyFields(validate(state.form)) as FormErrors<T>;
 
       if (Object.keys(errors).length) {
