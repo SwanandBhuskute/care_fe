@@ -566,3 +566,14 @@ export const camelCase = (str: string): string => {
     .toLowerCase()
     .replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ""));
 };
+
+//equivalent to lodash omitBy
+export function omitBy<T extends Record<string, unknown>>(
+  obj: T,
+  predicate: (value: unknown) => boolean = (value) =>
+    value !== "" && value !== undefined && value !== null,
+): Partial<T> {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([_, value]) => predicate(value)),
+  ) as Partial<T>;
+}

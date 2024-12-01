@@ -14,11 +14,9 @@ import {
   formReducer,
 } from "@/components/Form/Utils";
 
-import useOmitBy from "@/hooks/useOmitBy";
-
 import { DraftSection, useAutoSaveReducer } from "@/Utils/AutoSave";
 import * as Notification from "@/Utils/Notifications";
-import { classNames } from "@/Utils/utils";
+import { classNames, omitBy } from "@/Utils/utils";
 
 type Props<T extends FormDetails> = {
   className?: string;
@@ -45,8 +43,6 @@ const Form = <T extends FormDetails>({
   const [isLoading, setIsLoading] = useState(!!asyncGetDefaults);
   const [state, dispatch] = useAutoSaveReducer<T>(formReducer, initial);
 
-  const omitEmptyFields = useOmitBy();
-
   useEffect(() => {
     if (!asyncGetDefaults) return;
 
@@ -61,7 +57,7 @@ const Form = <T extends FormDetails>({
     event.stopPropagation();
 
     if (validate) {
-      const errors = omitEmptyFields(validate(state.form)) as FormErrors<T>;
+      const errors = omitBy(validate(state.form)) as FormErrors<T>;
 
       if (Object.keys(errors).length) {
         dispatch({ type: "set_errors", errors });
