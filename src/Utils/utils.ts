@@ -560,15 +560,6 @@ export const capitalizeWords = (str: string): string => {
     .join(" ");
 };
 
-// Converts a string to camelCase format, first word to lowercase and each subsequent word - uppercase letter, with no spaces.
-export const camelCase = (str: string): string => {
-  if (!str || str.length === 0) return "";
-  return str
-    .trim()
-    .toLowerCase()
-    .replace(/[-_\s]+(.)?/g, (_, c) => (c ? c.toUpperCase() : ""));
-};
-
 //equivalent to lodash omitBy
 export function omitBy<T extends Record<string, unknown>>(
   obj: T,
