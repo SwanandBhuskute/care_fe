@@ -14,7 +14,7 @@ import { GENDER_TYPES, TEST_TYPE_CHOICES } from "@/common/constants";
 import { DetailRoute } from "@/Routers/types";
 import routes from "@/Utils/request/api";
 import useQuery from "@/Utils/request/useQuery";
-import { camelCase, startCase } from "@/Utils/utils";
+import { camelCase, capitalizeWords, cleanString } from "@/Utils/utils";
 import { formatDateTime, formatPatientAge } from "@/Utils/utils";
 
 export const SampleDetails = ({ id }: DetailRoute) => {
@@ -372,7 +372,9 @@ export const SampleDetails = ({ id }: DetailRoute) => {
                 {t("doctors_name")}:{" "}
               </span>
               <span id="doctor_name">
-                {startCase(camelCase(sampleDetails.doctor_name))}
+                {capitalizeWords(
+                  cleanString(camelCase(sampleDetails.doctor_name)),
+                )}
               </span>
             </div>
           )}
@@ -456,7 +458,9 @@ export const SampleDetails = ({ id }: DetailRoute) => {
               <span className="font-semibold capitalize leading-relaxed">
                 {t("sample_type")}:{" "}
               </span>
-              {startCase(camelCase(sampleDetails.sample_type))}
+              {capitalizeWords(
+                cleanString(camelCase(sampleDetails.sample_type)),
+              )}
             </div>
           )}
           {sampleDetails?.sample_type === "OTHER TYPE" && (
