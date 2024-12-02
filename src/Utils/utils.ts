@@ -545,13 +545,13 @@ export const keysOf = <T extends object>(obj: T) => {
   return Object.keys(obj) as (keyof T)[];
 };
 
-//removes all symbols except _ and -
+//removes all symbols except _ and - (part of startCase)
 export const cleanString = (str: string): string => {
   if (!str || str.length === 0) return "";
   return str.replace(/[^a-zA-Z0-9_-]+/g, " ").trim();
 };
 
-// just capitalizes (as per startCase working)
+// just capitalizes (as per startCase working) (part of startCase)
 export const capitalizeWords = (str: string): string => {
   if (!str || str.length === 0) return "";
   return str
