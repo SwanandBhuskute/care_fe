@@ -551,20 +551,15 @@ export const cleanString = (str: string): string => {
   return str.replace(/[^a-zA-Z0-9_-]+/g, " ").trim();
 };
 
-// just capitalizes (as per startCase working) (part of startCase)
-export const capitalizeWords = (str: string): string => {
-  if (!str || str.length === 0) return "";
-  return str
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(" ");
+//equivalent to lodash omitBy
+export const isEmpty = (value: unknown) => {
+  return value !== "" && value != undefined;
 };
 
-//equivalent to lodash omitBy
+// equivalent to lodash omitBy
 export function omitBy<T extends Record<string, unknown>>(
   obj: T,
-  predicate: (value: unknown) => boolean = (value) =>
-    value !== "" && value !== undefined && value !== null,
+  predicate: (value: unknown) => boolean = isEmpty,
 ): Partial<T> {
   return Object.fromEntries(
     Object.entries(obj).filter(([_, value]) => predicate(value)),

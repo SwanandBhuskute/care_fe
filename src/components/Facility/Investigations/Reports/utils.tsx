@@ -1,4 +1,7 @@
-import { InvestigationResponse } from "@/components/Facility/Investigations/Reports/types";
+import {
+  Investigation,
+  InvestigationResponse,
+} from "@/components/Facility/Investigations/Reports/types";
 
 const memoize = <T extends (...args: any[]) => any>(fn: T): T => {
   const cache = new Map<string, ReturnType<T>>();
@@ -44,13 +47,13 @@ export const transformData = memoize((data: InvestigationResponse) => {
 
   const groupByInvestigation = Object.values(
     data.reduce(
-      (acc, value: any) => {
+      (acc, value: Investigation) => {
         const key = value.investigation_object.external_id;
         if (!acc[key]) acc[key] = [];
         acc[key].push(value);
         return acc;
       },
-      {} as { [key: string]: any[] },
+      {} as { [key: string]: Investigation[] },
     ),
   );
 
