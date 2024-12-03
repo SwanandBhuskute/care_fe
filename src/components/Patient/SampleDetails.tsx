@@ -372,7 +372,7 @@ export const SampleDetails = ({ id }: DetailRoute) => {
                 {t("doctors_name")}:{" "}
               </span>
               <span id="doctor_name">
-                {capitalizeWords(cleanString(sampleDetails.doctor_name))}
+                {capitalizeWords(cleanString(sampleDetails.doctor_name || ""))}
               </span>
             </div>
           )}
@@ -456,7 +456,7 @@ export const SampleDetails = ({ id }: DetailRoute) => {
               <span className="font-semibold capitalize leading-relaxed">
                 {t("sample_type")}:{" "}
               </span>
-              {capitalizeWords(cleanString(sampleDetails.sample_type))}
+              {capitalizeWords(cleanString(sampleDetails.sample_type || ""))}
             </div>
           )}
           {sampleDetails?.sample_type === "OTHER TYPE" && (
