@@ -91,7 +91,7 @@ const AutoCompleteAsync = (props: Props) => {
   }, debounceTime);
 
   useEffect(() => {
-    if (query) fetchDataDebounced(query);
+    fetchDataDebounced(query);
   }, [query, fetchDataDebounced]);
 
   return (
