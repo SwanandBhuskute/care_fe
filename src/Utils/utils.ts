@@ -554,7 +554,7 @@ export const cleanStringForNotifications = (str: string): string => {
   return str.replace(/[^a-zA-Z0-9]+/g, " ").trim();
 };
 
-// just capitalizes (as per startCase working) (part of startCase)
+// just capitalizes (as per startCase working) (part of startCase) (only inside Notification.js)
 export const capitalizeWords = (str: string): string => {
   if (!str) return "";
   return str
