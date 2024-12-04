@@ -547,7 +547,6 @@ export const keysOf = <T extends object>(obj: T) => {
 
 //removes all symbols except _ and - (one part of startCase)
 export const cleanString = (str: string): string => {
-  if (!str || str.length === 0) return "";
   return str.replace(/[^a-zA-Z0-9_-]+/g, " ").trim();
 };
 
