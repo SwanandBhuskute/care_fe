@@ -546,8 +546,21 @@ export const keysOf = <T extends object>(obj: T) => {
 };
 
 //removes all symbols except _ and - (one part of startCase)
-export const cleanString = (str: string): string => {
+export const cleanStringForNames = (str: string): string => {
   return str.replace(/[^a-zA-Z0-9_-]+/g, " ").trim();
+};
+
+export const cleanStringForNotifications = (str: string): string => {
+  return str.replace(/[^a-zA-Z0-9]+/g, " ").trim();
+};
+
+// just capitalizes (as per startCase working) (part of startCase)
+export const capitalizeWords = (str: string): string => {
+  if (!str || str.length === 0) return "";
+  return str
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(" ");
 };
 
 // Utility to check if a value is "empty"
