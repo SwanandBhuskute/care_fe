@@ -78,17 +78,11 @@ const AutoCompleteAsync = (props: Props) => {
         ? fetchedData.filter((item: any) => filter(item))
         : fetchedData;
 
-      const newData =
+      setData(
         showNOptions !== undefined
           ? filteredData.slice(0, showNOptions)
-          : filteredData;
-
-      setData((prevData) => {
-        if (JSON.stringify(prevData) !== JSON.stringify(newData)) {
-          return newData;
-        }
-        return prevData;
-      });
+          : filteredData,
+      );
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
