@@ -556,10 +556,13 @@ export const cleanStringForNotifications = (str: string): string => {
 
 // just capitalizes (as per startCase working) (part of startCase)
 export const capitalizeWords = (str: string): string => {
-  if (!str || str.length === 0) return "";
+  if (!str) return "";
   return str
     .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .map(
+      (word) =>
+        word.charAt(0).toLocaleUpperCase() + word.slice(1).toLocaleLowerCase(),
+    )
     .join(" ");
 };
 
