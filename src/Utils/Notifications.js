@@ -1,8 +1,6 @@
 import { Stack, alert, defaultModules } from "@pnotify/core";
 import * as PNotifyMobile from "@pnotify/mobile";
 
-import { capitalizeWords, cleanStringForNotifications } from "@/Utils/utils";
-
 defaultModules.set(PNotifyMobile, {});
 
 const notifyStack = new Stack({
@@ -36,6 +34,25 @@ const notify = (text, type) => {
   });
 };
 
+/**
+ * Formats input string to a more human readable format
+ * @param {string} key - The key to format
+ * @returns {string} The formatted key
+ * @example
+ * formatKey("patient_name") => "Patient Name"
+ */
+const formatKey = (key) => {
+  return key
+    .replace(/[^a-zA-Z0-9]+/g, " ") // Replace non-alphanumeric characters with a space
+    .trim()
+    .split(" ")
+    .map(
+      (word) =>
+        word.charAt(0).toLocaleUpperCase() + word.slice(1).toLocaleLowerCase(),
+    ) // Capitalize the first letter of each word and lowercase the rest
+    .join(" ");
+};
+
 const notifyError = (error) => {
   let errorMsg = "";
   if (typeof error === "string" || !error) {
@@ -45,7 +62,7 @@ const notifyError = (error) => {
     errorMsg = error.detail;
   } else {
     for (let [key, value] of Object.entries(error)) {
-      let keyName = capitalizeWords(cleanStringForNotifications(key));
+      let keyName = formatKey(key);
       if (Array.isArray(value)) {
         const uniques = [...new Set(value)];
         errorMsg += `${keyName} - ${uniques.splice(0, 5).join(", ")}`;

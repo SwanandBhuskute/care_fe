@@ -16,7 +16,7 @@ import {
 
 import { DraftSection, useAutoSaveReducer } from "@/Utils/AutoSave";
 import * as Notification from "@/Utils/Notifications";
-import { classNames, omitBy } from "@/Utils/utils";
+import { classNames, isEmpty, omitBy } from "@/Utils/utils";
 
 type Props<T extends FormDetails> = {
   className?: string;
@@ -57,7 +57,7 @@ const Form = <T extends FormDetails>({
     event.stopPropagation();
 
     if (validate) {
-      const errors = omitBy(validate(state.form)) as FormErrors<T>;
+      const errors = omitBy(validate(state.form), isEmpty) as FormErrors<T>;
 
       if (Object.keys(errors).length) {
         dispatch({ type: "set_errors", errors });

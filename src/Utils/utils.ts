@@ -545,27 +545,6 @@ export const keysOf = <T extends object>(obj: T) => {
   return Object.keys(obj) as (keyof T)[];
 };
 
-//removes all symbols except _ and - (one part of startCase)
-export const cleanStringForNames = (str: string): string => {
-  return str.replace(/[^a-zA-Z0-9_-]+/g, " ").trim();
-};
-
-export const cleanStringForNotifications = (str: string): string => {
-  return str.replace(/[^a-zA-Z0-9]+/g, " ").trim();
-};
-
-// just capitalizes (as per startCase working) (part of startCase) (only inside Notification.js)
-export const capitalizeWords = (str: string): string => {
-  if (!str) return "";
-  return str
-    .split(" ")
-    .map(
-      (word) =>
-        word.charAt(0).toLocaleUpperCase() + word.slice(1).toLocaleLowerCase(),
-    )
-    .join(" ");
-};
-
 // Utility to check if a value is "empty"
 export const isEmpty = (value: unknown) => {
   return value === "" || value == undefined;
@@ -574,7 +553,7 @@ export const isEmpty = (value: unknown) => {
 // equivalent to lodash omitBy
 export function omitBy<T extends Record<string, unknown>>(
   obj: T,
-  predicate: (value: unknown) => boolean = isEmpty,
+  predicate: (value: unknown) => boolean,
 ): Partial<T> {
   return Object.fromEntries(
     Object.entries(obj).filter(([_, value]) => !predicate(value)),
